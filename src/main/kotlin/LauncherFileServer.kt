@@ -1,4 +1,4 @@
-package org.lewapnoob.gridMapFileServer
+package org.lewapnoob.KapeLuzFileServer
 
 import com.sun.net.httpserver.HttpServer
 import java.awt.*
@@ -15,9 +15,8 @@ import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeCellRenderer
 import javax.swing.tree.DefaultTreeModel
 
-// Logika katalogu gry (wspólna z launcherem)
 private val launcherGameDir: File by lazy {
-    val appName = "gridMap"
+    val appName = "KapeLuz"
     val dottedName = ".$appName"
 
     val userHome = System.getProperty("user.home")
@@ -37,7 +36,7 @@ private val launcherGameDir: File by lazy {
     path.apply { mkdirs() }
 }
 
-class GridMapServer : JFrame("GridMap - File Streamer Server") {
+class KapeLuzFileServer : JFrame("KapeLuz - File Server") {
 
     private var server: HttpServer? = null
     private val port = 4777
@@ -405,6 +404,6 @@ fun main() {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 
     SwingUtilities.invokeLater {
-        GridMapServer().isVisible = true
+        KapeLuzFileServer().isVisible = true
     }
 }

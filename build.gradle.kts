@@ -24,11 +24,11 @@ kotlin {
 
 group = "org.lewapnoob"
 version = "0.1"
-val MainClass = "org.lewapnoob.launcher.MainKt"
+val MainClass = "org.lewapnoob.KapeluzLauncher.LauncherKt"
 
 tasks {
     shadowJar {
-        archiveFileName.set("Launcher.jar")
+        archiveFileName.set("KapeLuz-Launcher.jar")
         mergeServiceFiles()
         manifest {
             attributes["Main-Class"] = MainClass
@@ -43,7 +43,7 @@ tasks.withType<Jar> {
 }
 
 tasks.jar {
-    archiveBaseName.set("Launcher_RAW")
+    archiveBaseName.set("KapeLuz-Launcher_RAW")
     archiveVersion.set("")
     archiveClassifier.set("")
 }

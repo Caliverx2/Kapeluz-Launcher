@@ -1,4 +1,4 @@
-package org.lewapnoob.launcher
+package org.lewapnoob.KapeluzLauncher
 
 import java.awt.*
 import java.io.File
@@ -6,9 +6,8 @@ import java.io.FileOutputStream
 import java.net.URL
 import javax.swing.*
 
-// Logika katalogu gry (wspólna, ale tutaj jako osobna aplikacja)
 private val launcherGameDir: File by lazy {
-    val appName = "gridMap"
+    val appName = "KapeLuz"
     val dottedName = ".$appName"
 
     val userHome = System.getProperty("user.home")
@@ -28,7 +27,7 @@ private val launcherGameDir: File by lazy {
     path.apply { mkdirs() }
 }
 
-class GridMapLauncher : JFrame("KapeLuż Launcher") {
+class KapeLuzLauncher : JFrame("KapeLuz Launcher") {
     private val versionsDir = File(launcherGameDir, "versions").apply { mkdirs() }
     private val defaultJvmArgs = "-Xmx1024m -Xms512m -XX:+UseZGC -XX:+ZGenerational"
 
@@ -292,5 +291,5 @@ class GridMapLauncher : JFrame("KapeLuż Launcher") {
 }
 
 fun main() {
-    SwingUtilities.invokeLater { GridMapLauncher().isVisible = true }
+    SwingUtilities.invokeLater { KapeLuzLauncher().isVisible = true }
 }
