@@ -1,34 +1,14 @@
 package org.lewapnoob.KapeluzLauncher
 
+import GameDir
 import java.awt.*
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 import javax.swing.*
 
-private val launcherGameDir: File by lazy {
-    val appName = "KapeLuz"
-    val dottedName = ".$appName"
-
-    val userHome = System.getProperty("user.home")
-    val os = System.getProperty("os.name").lowercase(java.util.Locale.ROOT)
-
-    val path = when {
-        os.contains("win") -> {
-            val appData = System.getenv("APPDATA")
-            if (appData != null) File(appData, dottedName) else File(userHome, dottedName)
-        }
-        os.contains("mac") -> {
-            File(userHome, "Library/Application Support/$dottedName")
-        } else -> {
-            File(userHome, dottedName)
-        }
-    }
-    path.apply { mkdirs() }
-}
-
 class KapeLuzLauncher : JFrame("KapeLuz Launcher") {
-    private val versionsDir = File(launcherGameDir, "versions").apply { mkdirs() }
+    private val versionsDir = File(GameDir, "versions").apply { mkdirs() }
     private val defaultJvmArgs = "-Xmx1024m -Xms512m -XX:+UseZGC -XX:+ZGenerational"
 
     private val server = "lewapnoob.ddns.net"
@@ -118,7 +98,7 @@ class KapeLuzLauncher : JFrame("KapeLuz Launcher") {
         add(progressBar, gbc)
 
         // Info label location
-        val pathLabel = JLabel("Game path: ${launcherGameDir.absolutePath}")
+        val pathLabel = JLabel("Game path: ${GameDir.absolutePath}")
         pathLabel.font = Font("Consolas", Font.PLAIN, 10)
         pathLabel.foreground = Color.GRAY
         gbc.gridy = 8

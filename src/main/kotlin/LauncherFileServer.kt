@@ -1,5 +1,6 @@
 package org.lewapnoob.KapeLuzFileServer
 
+import GameDir
 import com.sun.net.httpserver.HttpServer
 import java.awt.*
 import java.io.File
@@ -14,27 +15,6 @@ import javax.swing.table.DefaultTableModel
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeCellRenderer
 import javax.swing.tree.DefaultTreeModel
-
-private val launcherGameDir: File by lazy {
-    val appName = "KapeLuz"
-    val dottedName = ".$appName"
-
-    val userHome = System.getProperty("user.home")
-    val os = System.getProperty("os.name").lowercase(java.util.Locale.ROOT)
-
-    val path = when {
-        os.contains("win") -> {
-            val appData = System.getenv("APPDATA")
-            if (appData != null) File(appData, dottedName) else File(userHome, dottedName)
-        }
-        os.contains("mac") -> {
-            File(userHome, "Library/Application Support/$dottedName")
-        } else -> {
-            File(userHome, dottedName)
-        }
-    }
-    path.apply { mkdirs() }
-}
 
 class KapeLuzFileServer : JFrame("KapeLuz - File Server") {
 
@@ -90,7 +70,7 @@ class KapeLuzFileServer : JFrame("KapeLuz - File Server") {
         initTree()
         
         // Domyślnie otwórz folder gry
-        val defaultDir = File(launcherGameDir, "versions").apply { mkdirs() }
+        val defaultDir = File(GameDir, "versions").apply { mkdirs() }
         loadFolderToTable(defaultDir)
         pathField.text = defaultDir.absolutePath
     }
