@@ -23,6 +23,7 @@ class KapeLuzFileServer : JFrame("KapeLuz - File Server") {
     
     // Stan serwera
     private var activeStreamFolder: File? = null
+    private val optionsFile = File(GameDir, "optionsServer.txt")
     // Zbiór plików wykluczonych (nazwy plików)
     private val excludedFiles = ConcurrentHashMap.newKeySet<String>()
     private var isServerRunning = false
@@ -71,8 +72,20 @@ class KapeLuzFileServer : JFrame("KapeLuz - File Server") {
         
         // Domyślnie otwórz folder gry
         val defaultDir = File(GameDir, "versions").apply { mkdirs() }
-        loadFolderToTable(defaultDir)
-        pathField.text = defaultDir.absolutePath
+        var startDir = defaultDir
+
+        if (optionsFile.exists()) {
+            val savedPath = optionsFile.readText().trim()
+            val savedFile = File(savedPath)
+            if (savedFile.exists() && savedFile.isDirectory) {
+                startDir = savedFile
+            }
+        } else {
+            optionsFile.writeText(defaultDir.absolutePath)
+        }
+
+        loadFolderToTable(startDir)
+        pathField.text = startDir.absolutePath
     }
 
     private fun setupUI() {
@@ -279,6 +292,7 @@ class KapeLuzFileServer : JFrame("KapeLuz - File Server") {
             stopHttpServer() 
             
             activeStreamFolder = folder
+            optionsFile.writeText(folder.absolutePath)
             updateExclusionsFromTable()
             startHttpServer()
             
